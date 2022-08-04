@@ -11,7 +11,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        colorScheme: ThemeData().colorScheme.copyWith(
+              secondary: Colors.amber,
+            ),
+        fontFamily: 'Raleway',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              bodyText1: const TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              bodyText2: const TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              headline1: const TextStyle(
+                fontSize: 20.0,
+                fontFamily: 'RobotoCondensed',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+      ),
       debugShowCheckedModeBanner: false,
       home: CategoryScreen(),
     );
