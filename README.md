@@ -1,4 +1,4 @@
-# MealsApp
+# Recipes
 simple flutter app focusing on navigation between screens and passing data using navigation and constructors without state management approaches.
 
 ## Screens
