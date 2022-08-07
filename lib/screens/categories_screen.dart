@@ -10,9 +10,6 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const MainDrawer(),
-      appBar: AppBar(
-        title: const Text("Meals"),
-      ),
       body: GridView(
         padding: const EdgeInsets.all(15.0),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

@@ -4,6 +4,7 @@ import 'package:meals/screens/categories_screen.dart';
 import 'package:meals/screens/category_meals_screen.dart';
 import 'package:meals/screens/filters_screen.dart';
 import 'package:meals/screens/meal_details_screen.dart';
+import 'package:meals/screens/tabs_screen.dart';
 
 import 'models/meal.dart';
 
@@ -27,34 +28,53 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favMeals = [];
 
-  void _setFilters(Map<String, bool> filterData){
+  void addToFavorites(String mealId) {
+    final existingIndex =
+        _favMeals.indexWhere((element) => element.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favMeals.add(_availableMeals.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isFav(String id) {
+    return _favMeals.any((meal) => meal.id == id);
+  }
+
+  void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
 
-      _availableMeals = DUMMY_MEALS.where((meal){
-        if(_filters['gluten'] == true && !meal.isGlutenFree){
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['gluten'] == true && !meal.isGlutenFree) {
           return false;
         }
-        if(_filters['lactose'] == true && !meal.isLactoseFree){
+        if (_filters['lactose'] == true && !meal.isLactoseFree) {
           return false;
         }
-        if(_filters['vegan'] == true && !meal.isVegan){
+        if (_filters['vegan'] == true && !meal.isVegan) {
           return false;
         }
-        if(_filters['vegetarian'] == true && !meal.isVegetarian){
+        if (_filters['vegetarian'] == true && !meal.isVegetarian) {
           return false;
         }
         return true;
-
       }).toList();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.amberAccent[100],
+        scaffoldBackgroundColor: Colors.yellow[100],
         primarySwatch: Colors.teal,
         colorScheme: ThemeData().colorScheme.copyWith(
               secondary: Colors.orangeAccent,
@@ -78,10 +98,20 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (ctx) => const CategoryScreen(),
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(availableMeals: _availableMeals,),
-        MealDetailsScreen.routeName: (ctx) => const MealDetailsScreen(),
-        FiltersScreen.routeName: (ctx) => FiltersScreen(saveFilters: _setFilters,currentFilters: _filters,),
+        '/': (ctx) => TabsScreen(
+              favMeals: _favMeals,
+            ),
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(
+              availableMeals: _availableMeals,
+            ),
+        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen(
+              addToFav: addToFavorites,
+              isFav: _isFav,
+            ),
+        FiltersScreen.routeName: (ctx) => FiltersScreen(
+              saveFilters: _setFilters,
+              currentFilters: _filters,
+            ),
       },
     );
   }

@@ -3,8 +3,9 @@ import 'package:meals/dummy_data.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   static const routeName = "/meal_details_screen";
-
-  const MealDetailsScreen({Key? key}) : super(key: key);
+  final Function addToFav;
+  final Function isFav;
+  const MealDetailsScreen({Key? key, required this.addToFav, required this.isFav}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,14 @@ class MealDetailsScreen extends StatelessWidget {
         title: Text(
           selectedMeal.title,
         ),
+        actions: [
+          IconButton(
+            icon: isFav(id) ? const Icon(Icons.star) : const Icon(Icons.star_border_outlined),
+            onPressed: (){
+              addToFav(id);
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
