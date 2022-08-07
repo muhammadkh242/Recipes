@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meals/widgets/category_item.dart';
 import 'package:meals/dummy_data.dart';
+import 'package:meals/widgets/main_drawer.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const MainDrawer(),
       appBar: AppBar(
         title: const Text("Meals"),
       ),

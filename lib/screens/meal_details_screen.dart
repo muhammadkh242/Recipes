@@ -65,6 +65,13 @@ class MealDetailsScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pop(id);
+        },
+        child: const Icon(Icons.delete),
+
+      ),
     );
   }
 
@@ -86,7 +93,7 @@ class MealDetailsScreen extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       height: 150,
-      width: 300,
+      width: 350,
       child: child,
     );
   }
