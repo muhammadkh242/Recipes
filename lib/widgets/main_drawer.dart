@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/screens/filters_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -26,8 +27,12 @@ class MainDrawer extends StatelessWidget {
           const SizedBox(
             height: 20.0,
           ),
-          buildListTile("Meals", Icons.restaurant, () => null),
-          buildListTile("Filters", Icons.settings, () => null)
+          buildListTile("Meals", Icons.restaurant, (){
+            Navigator.of(context).pushReplacementNamed('/');
+          }),
+          buildListTile("Filters", Icons.settings, () {
+            Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+          })
         ],
       ),
     );
